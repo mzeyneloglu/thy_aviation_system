@@ -4,5 +4,10 @@ public enum TransportationType {
     FLIGHT,
     BUS,
     SUBWAY,
-    UBER
+    UBER;
+
+    public boolean isGroundTransport() {
+        return this != FLIGHT;
+    }
+
 }

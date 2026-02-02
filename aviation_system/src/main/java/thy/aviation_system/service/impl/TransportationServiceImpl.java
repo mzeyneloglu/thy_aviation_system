@@ -44,13 +44,17 @@ public class TransportationServiceImpl implements TransportationService {
     }
 
     @Override
-    @Transactional
+    @Transactional(rollbackOn = Exception.class)
     public TransportationDTO insertTransportation(InsertTransportationRequest insertTransportationRequest) {
         Location originLocation = locationRepository.getLocationById(insertTransportationRequest.getOriginLocationId())
                 .orElseThrow(() -> new BusinessValidationException(AviationSystemValidationRules.LOCATION_NOT_FOUND));
 
         Location destinationLocation = locationRepository.getLocationById(insertTransportationRequest.getDestinationLocationId())
                 .orElseThrow(() -> new BusinessValidationException(AviationSystemValidationRules.LOCATION_NOT_FOUND));
+
+        if (destinationLocation.getLocationCode().equals(originLocation.getLocationCode())){
+            throw new BusinessValidationException(AviationSystemValidationRules.ORIGIN_LOCATION_AND_DESTINATION_LOCATION_CANNOT_BE_SAME);
+        }
 
         Transportation transportation = transportationMapper.toEntity(insertTransportationRequest);
         transportation.setOriginLocation(originLocation);
@@ -60,18 +64,22 @@ public class TransportationServiceImpl implements TransportationService {
     }
 
     @Override
-    @Transactional
+    @Transactional(rollbackOn = Exception.class)
     public BatchInsertTransportationResponse batchInsertLocations(List<InsertTransportationRequest> insertTransportationRequests) {
         List<TransportationDTO> successList = new ArrayList<>();
         List<BatchErrorDetail> errorList = new ArrayList<>();
 
-        for (int i = 0; i <= insertTransportationRequests.size(); i++) {
+        for (int i = 0; i < insertTransportationRequests.size(); i++) {
             try {
                 Location originLocation = locationRepository.getLocationById(insertTransportationRequests.get(i).getOriginLocationId())
                         .orElseThrow(() -> new BusinessValidationException(AviationSystemValidationRules.LOCATION_NOT_FOUND));
 
                 Location destinationLocation = locationRepository.getLocationById(insertTransportationRequests.get(i).getDestinationLocationId())
                         .orElseThrow(() -> new BusinessValidationException(AviationSystemValidationRules.LOCATION_NOT_FOUND));
+
+                if (destinationLocation.getLocationCode().equals(originLocation.getLocationCode())){
+                    throw new BusinessValidationException(AviationSystemValidationRules.ORIGIN_LOCATION_AND_DESTINATION_LOCATION_CANNOT_BE_SAME);
+                }
 
                 Transportation transportation = transportationMapper.toEntity(insertTransportationRequests.get(i));
                 transportation.setOriginLocation(originLocation);
@@ -95,7 +103,7 @@ public class TransportationServiceImpl implements TransportationService {
     }
 
     @Override
-    @Transactional
+    @Transactional(rollbackOn = Exception.class)
     public TransportationDTO updateTransportationWithById(UpdateTransportationRequest updateTransportationRequest) {
         Location originLocation = locationRepository.getLocationById(updateTransportationRequest.getOriginLocationId())
                 .orElseThrow(() -> new BusinessValidationException(AviationSystemValidationRules.LOCATION_NOT_FOUND));
@@ -114,6 +122,7 @@ public class TransportationServiceImpl implements TransportationService {
     }
 
     @Override
+    @Transactional(rollbackOn = Exception.class)
     public TransportationDTO patchTransportationWithById(PatchTransportationRequest patchTransportationRequest) {
         Location originLocation = locationRepository.getLocationById(patchTransportationRequest.getOriginLocationId())
                 .orElseThrow(() -> new BusinessValidationException(AviationSystemValidationRules.LOCATION_NOT_FOUND));

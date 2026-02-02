@@ -1,9 +1,11 @@
 package thy.aviation_system.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
 import thy.aviation_system.constants.TransportationType;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "transportations", indexes = {
@@ -34,4 +36,24 @@ public class Transportation {
 
     @Column(name = "operating_days", length = 50)
     private String operatingDays;
+
+    @Transient
+    public List<Integer> getOperatingDaysAsList() {
+        if (operatingDays == null || operatingDays.trim().isEmpty()) {
+            return List.of();
+        }
+        return Arrays.stream(operatingDays.split(","))
+                .map(String::trim)
+                .filter(s -> !s.isEmpty())
+                .map(Integer::parseInt)
+                .collect(Collectors.toList());
+    }
+
+    @Transient
+    public boolean operatesOnDay(int dayOfWeek) {
+        if (operatingDays == null || operatingDays.trim().isEmpty()) {
+            return true;
+        }
+        return getOperatingDaysAsList().contains(dayOfWeek);
+    }
 }

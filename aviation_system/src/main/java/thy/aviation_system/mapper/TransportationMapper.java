@@ -8,8 +8,13 @@ import thy.aviation_system.dto.TransportationDTO;
 import thy.aviation_system.entity.Transportation;
 import java.util.List;
 
-@Mapper(componentModel = "spring", uses = {LocationMapper.class})
+@Mapper(
+        componentModel = "spring",
+        uses = {LocationMapper.class},
+        unmappedTargetPolicy = ReportingPolicy.IGNORE
+)
 public interface TransportationMapper {
+
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "originLocation", ignore = true)
     @Mapping(target = "destinationLocation", ignore = true)
