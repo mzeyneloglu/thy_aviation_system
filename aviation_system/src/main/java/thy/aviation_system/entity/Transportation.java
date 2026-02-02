@@ -1,5 +1,6 @@
 package thy.aviation_system.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
 import thy.aviation_system.constants.TransportationType;
@@ -15,7 +16,6 @@ import thy.aviation_system.constants.TransportationType;
 @AllArgsConstructor
 @Builder
 public class Transportation {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
