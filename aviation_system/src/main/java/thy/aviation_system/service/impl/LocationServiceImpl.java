@@ -51,15 +51,19 @@ public class LocationServiceImpl implements LocationService {
     }
 
     @Override
-    @Transactional
+    @Transactional(rollbackOn = Exception.class)
     public LocationDTO insertLocation(InsertLocationRequest insertLocationRequest) {
         Location insertedLocation = locationMapper.toEntity(insertLocationRequest);
+
+        if (locationRepository.existsByLocationCode((insertedLocation.getLocationCode())))
+            throw new BusinessValidationException(AviationSystemValidationRules.INSERTED_LOCATION);
+
         locationRepository.save(insertedLocation);
         return locationMapper.toDTO(insertedLocation);
     }
 
     @Override
-    @Transactional
+    @Transactional(rollbackOn = Exception.class)
     public BatchInsertLocationResponse batchInsertLocations(List<InsertLocationRequest> insertLocationRequests) {
         List<LocationDTO> successList = new ArrayList<>();
         List<BatchErrorDetail> errorList = new ArrayList<>();
@@ -68,6 +72,10 @@ public class LocationServiceImpl implements LocationService {
             try {
                 InsertLocationRequest request = insertLocationRequests.get(i);
                 Location entity = locationMapper.toEntity(request);
+
+                if (locationRepository.existsByLocationCode((entity.getLocationCode())))
+                    throw new BusinessValidationException(AviationSystemValidationRules.INSERTED_LOCATION);
+
                 Location saved = locationRepository.save(entity);
                 successList.add(locationMapper.toDTO(saved));
             } catch (Exception e) {
@@ -87,6 +95,7 @@ public class LocationServiceImpl implements LocationService {
     }
 
     @Override
+    @Transactional(rollbackOn = Exception.class)
     public LocationDTO updateLocationWithById(UpdateLocationRequest updateLocationRequest) {
         Location location = locationRepository.getLocationById(updateLocationRequest.getId())
                 .orElseThrow(() -> new BusinessValidationException(AviationSystemValidationRules.LOCATION_NOT_FOUND));
@@ -96,6 +105,7 @@ public class LocationServiceImpl implements LocationService {
     }
 
     @Override
+    @Transactional(rollbackOn = Exception.class)
     public void deleteLocationWithById(Long id) {
         Location location = locationRepository.getLocationById(id)
                 .orElseThrow(() -> new BusinessValidationException(AviationSystemValidationRules.LOCATION_NOT_FOUND));
@@ -103,6 +113,7 @@ public class LocationServiceImpl implements LocationService {
     }
 
     @Override
+    @Transactional(rollbackOn = Exception.class)
     public LocationDTO patchLocationWithById(PatchLocationRequest patchLocationRequest) {
         Location location = locationRepository.getLocationById(patchLocationRequest.getId())
                 .orElseThrow(() -> new BusinessValidationException(AviationSystemValidationRules.LOCATION_NOT_FOUND));

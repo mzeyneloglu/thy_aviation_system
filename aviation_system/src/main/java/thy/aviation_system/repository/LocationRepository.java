@@ -15,4 +15,6 @@ public interface LocationRepository extends JpaRepository<Location, Long> {
     List<Location> findAllByOrderById();
 
     Optional<Location> getLocationByLocationCode(String locationCode);
+
+    boolean existsByLocationCode(String locationCode);
 }
