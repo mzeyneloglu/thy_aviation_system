@@ -1,0 +1,15 @@
+.transportation-list-container {
+    animation: fadeIn 0.2s ease-out;
+}
+
+.transportation-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: var(--space-4);
+}
+
+@media (max-width: 768px) {
+    .transportation-grid {
+        grid-template-columns: 1fr;
+    }
+}
