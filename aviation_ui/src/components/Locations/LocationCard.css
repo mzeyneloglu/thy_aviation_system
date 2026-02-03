@@ -1,0 +1,70 @@
+.location-card {
+    background: white;
+    border: 1px solid var(--gray-200);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    transition: box-shadow 0.15s;
+}
+
+.location-card:hover {
+    box-shadow: var(--shadow-md);
+}
+
+.location-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--space-4);
+    background: var(--gray-50);
+    border-bottom: 1px solid var(--gray-200);
+}
+
+.location-code {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--primary);
+    letter-spacing: 0.05em;
+}
+
+.location-actions {
+    display: flex;
+    gap: var(--space-2);
+}
+
+.location-body {
+    padding: var(--space-4);
+}
+
+.location-name {
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--gray-900);
+    margin-bottom: var(--space-3);
+}
+
+.location-meta {
+    font-size: 0.8125rem;
+    color: var(--gray-500);
+    display: flex;
+    align-items: center;
+    gap: var(--space-1);
+}
+
+.location-meta::before {
+    content: '📍';
+    font-size: 0.75rem;
+    opacity: 0.7;
+}
+
+@media (max-width: 768px) {
+    .location-header {
+        flex-direction: column;
+        gap: var(--space-2);
+        align-items: flex-start;
+    }
+
+    .location-actions {
+        width: 100%;
+        justify-content: flex-end;
+    }
+}

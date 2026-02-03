@@ -1,0 +1,37 @@
+.layout {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.main-content {
+    flex: 1;
+    padding: var(--space-8) 0;
+}
+
+.footer {
+    background: var(--gray-800);
+    color: var(--gray-400);
+    padding: var(--space-6) 0;
+    margin-top: var(--space-8);
+}
+
+.footer p {
+    text-align: center;
+    font-size: 0.875rem;
+    margin: 0;
+}
+
+@media (max-width: 768px) {
+    .main-content {
+        padding: var(--space-6) 0;
+    }
+
+    .footer {
+        padding: var(--space-4) 0;
+    }
+
+    .footer p {
+        font-size: 0.75rem;
+    }
+}
