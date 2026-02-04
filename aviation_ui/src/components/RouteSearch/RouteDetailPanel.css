@@ -1,0 +1,66 @@
+.route-detail-panel {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 450px;
+    background: white;
+    box-shadow: -4px 0 20px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+.panel-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--space-4) var(--space-6);
+    border-bottom: 1px solid var(--gray-200);
+    background: var(--gray-50);
+}
+
+.panel-header h3 {
+    margin: 0;
+    font-size: 1.125rem;
+    color: var(--gray-900);
+}
+
+.close-btn {
+    font-size: 1.25rem;
+    color: var(--gray-500);
+    padding: var(--space-1);
+    line-height: 1;
+}
+
+.close-btn:hover {
+    color: var(--gray-900);
+    background: var(--gray-200);
+}
+
+.panel-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: var(--space-6);
+}
+
+@media (max-width: 768px) {
+    .route-detail-panel {
+        width: 100%;
+    }
+}
+
+@keyframes slideInRight {
+    from {
+        transform: translateX(100%);
+    }
+
+    to {
+        transform: translateX(0);
+    }
+}
+
+.slide-in-right {
+    animation: slideInRight 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}

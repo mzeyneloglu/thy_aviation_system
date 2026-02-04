@@ -7,7 +7,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import thy.aviation_system.constants.AviationSystemValidationRules;
 import thy.aviation_system.controller.request.InsertTransportationRequest;
-import thy.aviation_system.controller.request.PatchTransportationRequest;
 import thy.aviation_system.controller.request.UpdateTransportationRequest;
 import thy.aviation_system.controller.response.BatchErrorDetail;
 import thy.aviation_system.controller.response.BatchInsertTransportationResponse;
@@ -51,6 +50,10 @@ public class TransportationServiceImpl implements TransportationService {
 
         Location destinationLocation = locationRepository.getLocationById(insertTransportationRequest.getDestinationLocationId())
                 .orElseThrow(() -> new BusinessValidationException(AviationSystemValidationRules.LOCATION_NOT_FOUND));
+
+        if (transportationRepository.existsByOriginLocationAndDestinationLocationAndTransportationTypeAndOperatingDays(originLocation,
+                destinationLocation, insertTransportationRequest.getTransportationType(), insertTransportationRequest.getOperatingDays()))
+            throw new BusinessValidationException(AviationSystemValidationRules.INSERTED_TRANSPORTATION);
 
         if (destinationLocation.getLocationCode().equals(originLocation.getLocationCode())){
             throw new BusinessValidationException(AviationSystemValidationRules.ORIGIN_LOCATION_AND_DESTINATION_LOCATION_CANNOT_BE_SAME);
@@ -115,24 +118,6 @@ public class TransportationServiceImpl implements TransportationService {
                 .orElseThrow(()-> new BusinessValidationException(AviationSystemValidationRules.TRANSPORTATION_NOT_FOUND));
 
         transportationMapper.updateEntity(updateTransportationRequest, transportation);
-        transportation.setOriginLocation(originLocation);
-        transportation.setDestinationLocation(destinationLocation);
-        transportationRepository.save(transportation);
-        return transportationMapper.toDTO(transportation);
-    }
-
-    @Override
-    @Transactional(rollbackOn = Exception.class)
-    public TransportationDTO patchTransportationWithById(PatchTransportationRequest patchTransportationRequest) {
-        Location originLocation = locationRepository.getLocationById(patchTransportationRequest.getOriginLocationId())
-                .orElseThrow(() -> new BusinessValidationException(AviationSystemValidationRules.LOCATION_NOT_FOUND));
-
-        Location destinationLocation = locationRepository.getLocationById(patchTransportationRequest.getDestinationLocationId())
-                .orElseThrow(() -> new BusinessValidationException(AviationSystemValidationRules.LOCATION_NOT_FOUND));
-
-        Transportation transportation = transportationRepository.getTransportationById(patchTransportationRequest.getId())
-                .orElseThrow(()-> new BusinessValidationException(AviationSystemValidationRules.TRANSPORTATION_NOT_FOUND));
-        transportationMapper.patchEntity(patchTransportationRequest, transportation);
         transportation.setOriginLocation(originLocation);
         transportation.setDestinationLocation(destinationLocation);
         transportationRepository.save(transportation);

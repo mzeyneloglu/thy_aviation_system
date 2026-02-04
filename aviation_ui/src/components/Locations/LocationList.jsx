@@ -26,8 +26,7 @@ export default function LocationList() {
             const data = await locationService.getAll();
             setLocations(data || []);
         } catch (err) {
-            console.error('Error fetching locations:', err);
-            setError(err.message || 'Failed to fetch locations');
+            setError(err.formattedMessage || err.message || 'Failed to fetch locations');
         } finally {
             setLoading(false);
         }
@@ -52,7 +51,7 @@ export default function LocationList() {
             await locationService.delete(id);
             setLocations(locations.filter((loc) => loc.id !== id));
         } catch (err) {
-            alert('Failed to delete location: ' + (err.message || 'Unknown error'));
+            alert('Failed to delete location: ' + (err.formattedMessage || err.message || 'Unknown error'));
         }
     };
 
@@ -78,7 +77,7 @@ export default function LocationList() {
             setIsModalOpen(false);
             setEditingLocation(null);
         } catch (err) {
-            alert('Failed to save location: ' + (err.message || 'Unknown error'));
+            alert('Failed to save location: ' + (err.formattedMessage || err.message || 'Unknown error'));
         }
     };
 

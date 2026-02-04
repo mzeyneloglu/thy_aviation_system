@@ -1,7 +1,6 @@
 package thy.aviation_system.service;
 
 import thy.aviation_system.controller.request.InsertLocationRequest;
-import thy.aviation_system.controller.request.PatchLocationRequest;
 import thy.aviation_system.controller.request.UpdateLocationRequest;
 import thy.aviation_system.controller.response.BatchInsertLocationResponse;
 import thy.aviation_system.dto.LocationDTO;
@@ -22,5 +21,4 @@ public interface LocationService {
 
     void deleteLocationWithById(Long id);
 
-    LocationDTO patchLocationWithById(PatchLocationRequest patchLocationRequest);
 }

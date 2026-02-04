@@ -20,7 +20,7 @@ export default function RouteSearchPage() {
             const data = await routeService.searchRoutes(origin, destination, date);
             setRoutes(data);
         } catch (err) {
-            setError(err.message || 'Failed to search routes');
+            setError(err.formattedMessage || err.message || 'Failed to search routes');
             setRoutes(null);
         } finally {
             setLoading(false);
