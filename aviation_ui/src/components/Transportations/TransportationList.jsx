@@ -26,7 +26,7 @@ export default function TransportationList() {
             const data = await transportationService.getAll();
             setTransportations(data || []);
         } catch (err) {
-            setError(err.message || 'Failed to fetch transportations');
+            setError(err.formattedMessage || err.message || 'Failed to fetch transportations');
         } finally {
             setLoading(false);
         }
@@ -56,18 +56,17 @@ export default function TransportationList() {
             await transportationService.delete(id);
             setTransportations(transportations.filter((t) => t.id !== id));
         } catch (err) {
-            alert('Failed to delete transportation: ' + (err.message || 'Unknown error'));
+            alert('Failed to delete transportation: ' + (err.formattedMessage || err.message || 'Unknown error'));
         }
     };
 
     const handleSubmit = async (formData) => {
         try {
             if (editingTransportation) {
-                // Merge form data with existing data to fill in any missing fields
                 const updatedData = {
                     ...editingTransportation,
                     ...formData,
-                    id: editingTransportation.id, // Ensure ID is preserved
+                    id: editingTransportation.id,
                 };
                 const updated = await transportationService.update(updatedData);
                 setTransportations(transportations.map((t) =>
@@ -80,7 +79,7 @@ export default function TransportationList() {
             setIsModalOpen(false);
             setEditingTransportation(null);
         } catch (err) {
-            alert('Failed to save transportation: ' + (err.message || 'Unknown error'));
+            alert((err.formattedMessage || 'Unknown Error'));
         }
     };
 

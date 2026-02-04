@@ -2,7 +2,6 @@ package thy.aviation_system.mapper;
 
 import org.mapstruct.*;
 import thy.aviation_system.controller.request.InsertTransportationRequest;
-import thy.aviation_system.controller.request.PatchTransportationRequest;
 import thy.aviation_system.controller.request.UpdateTransportationRequest;
 import thy.aviation_system.dto.TransportationDTO;
 import thy.aviation_system.entity.Transportation;
@@ -25,12 +24,6 @@ public interface TransportationMapper {
     TransportationDTO toDTO(Transportation entity);
 
     List<TransportationDTO> toDTOList(List<Transportation> entities);
-
-    @Mapping(target = "id", ignore = true)
-    @Mapping(target = "originLocation", ignore = true)
-    @Mapping(target = "destinationLocation", ignore = true)
-    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    void patchEntity(PatchTransportationRequest request, @MappingTarget Transportation entity);
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "originLocation", ignore = true)

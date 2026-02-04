@@ -7,7 +7,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import thy.aviation_system.constants.AviationSystemValidationRules;
 import thy.aviation_system.controller.request.InsertLocationRequest;
-import thy.aviation_system.controller.request.PatchLocationRequest;
 import thy.aviation_system.controller.request.UpdateLocationRequest;
 import thy.aviation_system.controller.response.BatchErrorDetail;
 import thy.aviation_system.controller.response.BatchInsertLocationResponse;
@@ -110,16 +109,5 @@ public class LocationServiceImpl implements LocationService {
         Location location = locationRepository.getLocationById(id)
                 .orElseThrow(() -> new BusinessValidationException(AviationSystemValidationRules.LOCATION_NOT_FOUND));
         locationRepository.delete(location);
-    }
-
-    @Override
-    @Transactional(rollbackOn = Exception.class)
-    public LocationDTO patchLocationWithById(PatchLocationRequest patchLocationRequest) {
-        Location location = locationRepository.getLocationById(patchLocationRequest.getId())
-                .orElseThrow(() -> new BusinessValidationException(AviationSystemValidationRules.LOCATION_NOT_FOUND));
-
-        locationMapper.patchEntity(patchLocationRequest, location);
-        locationRepository.save(location);
-        return locationMapper.toDTO(location);
     }
 }

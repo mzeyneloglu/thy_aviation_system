@@ -1,9 +1,19 @@
-import React from 'react';
-import RouteCard from './RouteCard';
+import React, { useState } from 'react';
+import RouteSummaryCard from './RouteSummaryCard';
+import RouteDetailPanel from './RouteDetailPanel';
 import './RouteResults.css';
 
 export default function RouteResults({ routes: response, origin, destination }) {
     const routes = response?.routes || [];
+    const [selectedRoute, setSelectedRoute] = useState(null);
+
+    const handleRouteClick = (route) => {
+        setSelectedRoute(route);
+    };
+
+    const handleClosePanel = () => {
+        setSelectedRoute(null);
+    };
 
     if (!routes || routes.length === 0) {
         return (
@@ -21,21 +31,39 @@ export default function RouteResults({ routes: response, origin, destination }) 
     }
 
     return (
-        <div className="route-results">
-            <div className="results-header">
-                <h2>
-                    Found {routes.length} {routes.length === 1 ? 'Route' : 'Routes'}
-                </h2>
-                <p className="results-subtitle">
-                    From <span className="highlight">{response.origin || origin}</span> to <span className="highlight">{response.destination || destination}</span>
-                </p>
+        <div className="route-results-container">
+            <div className="results-list-section">
+                <div className="results-header">
+                    <h2>
+                        Found {routes.length} {routes.length === 1 ? 'Route' : 'Routes'}
+                    </h2>
+                    <p className="results-subtitle">
+                        From <span className="highlight">{response.origin || origin}</span> to <span className="highlight">{response.destination || destination}</span>
+                    </p>
+                </div>
+
+                <div className="routes-list">
+                    {routes.map((route, index) => (
+                        <RouteSummaryCard
+                            key={index}
+                            route={route}
+                            index={index}
+                            onClick={() => handleRouteClick(route)}
+                            isSelected={selectedRoute === route}
+                        />
+                    ))}
+                </div>
             </div>
 
-            <div className="routes-grid">
-                {routes.map((route, index) => (
-                    <RouteCard key={index} route={route} index={index} />
-                ))}
-            </div>
+            {selectedRoute && (
+                <>
+                    <div className="panel-overlay" onClick={handleClosePanel}></div>
+                    <RouteDetailPanel
+                        route={selectedRoute}
+                        onClose={handleClosePanel}
+                    />
+                </>
+            )}
         </div>
     );
 }

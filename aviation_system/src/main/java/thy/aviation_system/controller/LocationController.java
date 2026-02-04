@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.*;
 import thy.aviation_system.constants.ApiEndpoints;
 import thy.aviation_system.constants.ApiGroups;
 import thy.aviation_system.controller.request.InsertLocationRequest;
-import thy.aviation_system.controller.request.PatchLocationRequest;
 import thy.aviation_system.controller.request.UpdateLocationRequest;
 import thy.aviation_system.controller.response.BatchInsertLocationResponse;
 import thy.aviation_system.dto.LocationDTO;
@@ -57,12 +56,6 @@ public class LocationController {
     @ResponseStatus(HttpStatus.OK)
     public LocationDTO updateLocationWithById(@RequestBody @Valid UpdateLocationRequest updateLocationRequest) {
         return locationService.updateLocationWithById(updateLocationRequest);
-    }
-
-    @PatchMapping("/patch-location")
-    @ResponseStatus(HttpStatus.OK)
-    public LocationDTO patchLocationWithById(@RequestBody @Valid PatchLocationRequest patchLocationRequest) {
-        return locationService.patchLocationWithById(patchLocationRequest);
     }
 
     @DeleteMapping("/delete-location")

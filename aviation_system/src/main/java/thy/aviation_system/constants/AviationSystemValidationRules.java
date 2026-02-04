@@ -5,11 +5,12 @@ import lombok.Getter;
 @Getter
 public enum AviationSystemValidationRules {
 
-    LOCATION_NOT_FOUND("THY-0001", "LOCATION_NOT_FOUND"),
-    TRANSPORTATION_NOT_FOUND("THY-0002", "TRANSPORTATION_NOT_FOUND"),
-    LOCATION_NOT_FOUND_BY_CODE("THY-0003", "LOCATION_NOT_FOUND_BY_CODE"),
-    ORIGIN_LOCATION_AND_DESTINATION_LOCATION_CANNOT_BE_SAME("THY-0004","ORIGIN_LOCATION_AND_DESTINATION_LOCATION_CANNOT_BE_SAME"),
-    INSERTED_LOCATION("THY-0004","INSERTED_LOCATION");
+    LOCATION_NOT_FOUND("THY-0001", "Location not found!"),
+    TRANSPORTATION_NOT_FOUND("THY-0002", "Transportation not found!"),
+    LOCATION_NOT_FOUND_BY_CODE("THY-0003", "Location not found by code!"),
+    ORIGIN_LOCATION_AND_DESTINATION_LOCATION_CANNOT_BE_SAME("THY-0004","Origin location and destination location cannot be same!"),
+    INSERTED_LOCATION("THY-0005","Inserted same location!"),
+    INSERTED_TRANSPORTATION("THY-0006", "Inserted same transportation!");
 
     private final String defaultMessage;
     private final String code;

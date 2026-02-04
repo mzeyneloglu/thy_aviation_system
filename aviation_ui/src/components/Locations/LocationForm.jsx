@@ -20,7 +20,6 @@ export default function LocationForm({ initialData, onSubmit, onCancel }) {
             ...prev,
             [name]: value,
         }));
-        // Clear error when user starts typing
         if (errors[name]) {
             setErrors((prev) => ({
                 ...prev,
@@ -46,7 +45,10 @@ export default function LocationForm({ initialData, onSubmit, onCancel }) {
 
         if (!formData.locationCode.trim()) {
             newErrors.locationCode = 'Location code is required';
-        } 
+        } else if (formData.locationCode.length !== 3) {
+            newErrors.locationCode = 'Location code must be 3 characters (e.g., IST, JFK)';
+        }
+
         setErrors(newErrors);
         return Object.keys(newErrors).length === 0;
     };

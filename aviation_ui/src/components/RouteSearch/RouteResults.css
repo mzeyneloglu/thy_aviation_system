@@ -3,26 +3,52 @@
     animation: fadeIn 0.2s ease-out;
 }
 
+.route-results-container {
+    position: relative;
+}
+
+.results-list-section {
+    width: 100%;
+}
+
 .results-header {
     margin-bottom: var(--space-6);
 }
 
 .results-header h2 {
     margin-bottom: var(--space-2);
+    font-size: 1.5rem;
+    display: inline-block;
+    color: var(--gray-900);
+    font-size: 1.75rem;
+    font-weight: 800;
+    letter-spacing: -0.025em;
+    border-bottom: 3px solid var(--primary);
+    padding-bottom: var(--space-2);
 }
 
 .results-subtitle {
-    color: var(--gray-600);
-    font-size: 0.875rem;
+    color: var(--gray-500);
+    font-size: 0.95rem;
+    font-weight: 500;
 }
 
 .highlight {
-    color: var(--primary);
-    font-weight: 600;
+    color: var(--primary-600);
+    font-weight: 700;
+    background: var(--primary-50);
+    padding: 2px 6px;
+    border-radius: 4px;
 }
 
 .routes-grid {
     display: grid;
+    gap: var(--space-4);
+}
+
+.routes-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     gap: var(--space-4);
 }
 

@@ -51,12 +51,6 @@ public class TransportationController {
         return transportationService.updateTransportationWithById(updateTransportationRequest);
     }
 
-    @PatchMapping("/patch-transportation")
-    @ResponseStatus(HttpStatus.OK)
-    public TransportationDTO patchTransportationWithById(@RequestBody @Valid PatchTransportationRequest patchTransportationRequest) {
-        return transportationService.patchTransportationWithById(patchTransportationRequest);
-    }
-
     @DeleteMapping("/delete-transportation")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteTransportationWithById(@RequestParam Long id) {
