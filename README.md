@@ -28,6 +28,10 @@ Connection Limit: 5
 Permissions: SELECT only
 ```
 
+#### Swagger
+
+http://localhost:8080/swagger-ui/index.html
+
 
 ## Postman | Request Collection
 
