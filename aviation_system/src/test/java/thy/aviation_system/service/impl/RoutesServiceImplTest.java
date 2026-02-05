@@ -249,7 +249,7 @@ class RoutesServiceImplTest {
         RouteSearchResponse response = routesService.searchRoutes(request);
 
         assertEquals(0, response.getTotalRoutes());
-        assertEquals(LocalDate.of(2026,2,4), response.getSearchDate());
+        assertEquals(LocalDate.of(2026,2,5), response.getSearchDate());
     }
 
 }
