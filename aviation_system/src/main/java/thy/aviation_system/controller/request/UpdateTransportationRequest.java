@@ -4,7 +4,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import lombok.Getter;
 import lombok.Setter;
-import thy.aviation_system.constants.TransportationType;
+import thy.aviation_system.entity.TransportationType;
 
 @Getter
 @Setter

@@ -11,7 +11,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.context.SpringBootTest;
-import thy.aviation_system.constants.TransportationType;
+import thy.aviation_system.entity.TransportationType;
 import thy.aviation_system.controller.request.SearchRoutesRequest;
 import thy.aviation_system.controller.response.RouteSearchResponse;
 import thy.aviation_system.entity.Location;

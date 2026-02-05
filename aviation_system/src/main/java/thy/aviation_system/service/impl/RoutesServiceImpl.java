@@ -1,11 +1,9 @@
 package thy.aviation_system.service.impl;
 
 import lombok.RequiredArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import thy.aviation_system.constants.AviationSystemValidationRules;
-import thy.aviation_system.constants.TransportationType;
+import thy.aviation_system.entity.TransportationType;
 import thy.aviation_system.controller.request.SearchRoutesRequest;
 import thy.aviation_system.controller.response.RouteSearchResponse;
 import thy.aviation_system.controller.response.RouteSegmentResponse;
@@ -24,10 +22,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class RoutesServiceImpl implements RoutesService {
 
-    Logger logger = LoggerFactory.getLogger(RoutesServiceImpl.class);
     private final LocationRepository locationRepository;
     private final TransportationRepository transportationRepository;
-
 
     @Override
     public RouteSearchResponse searchRoutes(SearchRoutesRequest request) {

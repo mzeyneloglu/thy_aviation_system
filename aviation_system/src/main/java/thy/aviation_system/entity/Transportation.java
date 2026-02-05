@@ -2,7 +2,6 @@ package thy.aviation_system.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-import thy.aviation_system.constants.TransportationType;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;

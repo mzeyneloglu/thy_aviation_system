@@ -1,10 +1,8 @@
 package thy.aviation_system.service.impl;
 
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import thy.aviation_system.constants.AviationSystemValidationRules;
 import thy.aviation_system.controller.request.InsertTransportationRequest;
 import thy.aviation_system.controller.request.UpdateTransportationRequest;
@@ -25,7 +23,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class TransportationServiceImpl implements TransportationService {
 
-    Logger logger = LoggerFactory.getLogger(TransportationServiceImpl.class);
     private final TransportationRepository transportationRepository;
     private final LocationRepository locationRepository;
     private final TransportationMapper transportationMapper;
@@ -43,7 +40,7 @@ public class TransportationServiceImpl implements TransportationService {
     }
 
     @Override
-    @Transactional(rollbackOn = Exception.class)
+    @Transactional
     public TransportationDTO insertTransportation(InsertTransportationRequest insertTransportationRequest) {
         Location originLocation = locationRepository.getLocationById(insertTransportationRequest.getOriginLocationId())
                 .orElseThrow(() -> new BusinessValidationException(AviationSystemValidationRules.LOCATION_NOT_FOUND));
@@ -67,7 +64,7 @@ public class TransportationServiceImpl implements TransportationService {
     }
 
     @Override
-    @Transactional(rollbackOn = Exception.class)
+    @Transactional
     public BatchInsertTransportationResponse batchInsertLocations(List<InsertTransportationRequest> insertTransportationRequests) {
         List<TransportationDTO> successList = new ArrayList<>();
         List<BatchErrorDetail> errorList = new ArrayList<>();
@@ -106,7 +103,7 @@ public class TransportationServiceImpl implements TransportationService {
     }
 
     @Override
-    @Transactional(rollbackOn = Exception.class)
+    @Transactional
     public TransportationDTO updateTransportationWithById(UpdateTransportationRequest updateTransportationRequest) {
         Location originLocation = locationRepository.getLocationById(updateTransportationRequest.getOriginLocationId())
                 .orElseThrow(() -> new BusinessValidationException(AviationSystemValidationRules.LOCATION_NOT_FOUND));

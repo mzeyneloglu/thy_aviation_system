@@ -1,9 +1,8 @@
 package thy.aviation_system.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
-import thy.aviation_system.constants.TransportationType;
+import thy.aviation_system.entity.TransportationType;
 import thy.aviation_system.entity.Location;
 import thy.aviation_system.entity.Transportation;
 import java.util.List;
