@@ -51,18 +51,17 @@ export default function LocationList() {
             await locationService.delete(id);
             setLocations(locations.filter((loc) => loc.id !== id));
         } catch (err) {
-            alert('Failed to delete location: ' + (err.formattedMessage || err.message || 'Unknown error'));
+            alert((err.formattedMessage || err.message || 'Unknown error'));
         }
     };
 
     const handleSubmit = async (formData) => {
         try {
             if (editingLocation) {
-                // Merge form data with existing data to fill in any missing fields
                 const updatedData = {
                     ...editingLocation,
                     ...formData,
-                    id: parseInt(editingLocation.id, 10), // Ensure ID is an integer
+                    id: parseInt(editingLocation.id, 10), 
                 };
                 const updated = await locationService.update(editingLocation.id, updatedData);
                 setLocations(locations.map((loc) =>
@@ -77,7 +76,7 @@ export default function LocationList() {
             setIsModalOpen(false);
             setEditingLocation(null);
         } catch (err) {
-            alert('Failed to save location: ' + (err.formattedMessage || err.message || 'Unknown error'));
+            alert((err.formattedMessage || err.message || 'Unknown error'));
         }
     };
 

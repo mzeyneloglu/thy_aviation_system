@@ -45,8 +45,8 @@ export default function LocationForm({ initialData, onSubmit, onCancel }) {
 
         if (!formData.locationCode.trim()) {
             newErrors.locationCode = 'Location code is required';
-        } else if (formData.locationCode.length !== 3) {
-            newErrors.locationCode = 'Location code must be 3 characters (e.g., IST, JFK)';
+        } else if (3 <= formData.locationCode.length >= 10) {
+            newErrors.locationCode = 'Location code must be 3 beetween 10 characters (e.g., IST, JFK)';
         }
 
         setErrors(newErrors);
@@ -104,7 +104,7 @@ export default function LocationForm({ initialData, onSubmit, onCancel }) {
                 placeholder="e.g., IST"
                 required
                 error={errors.locationCode}
-                maxLength={3}
+                maxLength={10}
                 style={{ textTransform: 'uppercase' }}
             />
 
