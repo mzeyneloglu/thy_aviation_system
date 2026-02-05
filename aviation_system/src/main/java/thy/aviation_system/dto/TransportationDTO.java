@@ -1,7 +1,7 @@
 package thy.aviation_system.dto;
 
 import lombok.*;
-import thy.aviation_system.constants.TransportationType;
+import thy.aviation_system.entity.TransportationType;
 import thy.aviation_system.entity.Location;
 
 @Data

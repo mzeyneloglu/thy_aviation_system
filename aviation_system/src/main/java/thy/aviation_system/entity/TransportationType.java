@@ -1,4 +1,4 @@
-package thy.aviation_system.constants;
+package thy.aviation_system.entity;
 
 public enum TransportationType {
     FLIGHT,

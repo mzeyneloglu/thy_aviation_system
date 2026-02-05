@@ -1,10 +1,8 @@
 package thy.aviation_system.service.impl;
 
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import thy.aviation_system.constants.AviationSystemValidationRules;
 import thy.aviation_system.controller.request.InsertLocationRequest;
 import thy.aviation_system.controller.request.UpdateLocationRequest;
@@ -23,7 +21,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class LocationServiceImpl implements LocationService {
 
-    Logger logger = LoggerFactory.getLogger(LocationServiceImpl.class);
     private final LocationRepository locationRepository;
     private final LocationMapper locationMapper;
 
@@ -50,7 +47,7 @@ public class LocationServiceImpl implements LocationService {
     }
 
     @Override
-    @Transactional(rollbackOn = Exception.class)
+    @Transactional
     public LocationDTO insertLocation(InsertLocationRequest insertLocationRequest) {
         Location insertedLocation = locationMapper.toEntity(insertLocationRequest);
 
@@ -62,7 +59,7 @@ public class LocationServiceImpl implements LocationService {
     }
 
     @Override
-    @Transactional(rollbackOn = Exception.class)
+    @Transactional
     public BatchInsertLocationResponse batchInsertLocations(List<InsertLocationRequest> insertLocationRequests) {
         List<LocationDTO> successList = new ArrayList<>();
         List<BatchErrorDetail> errorList = new ArrayList<>();
@@ -94,7 +91,7 @@ public class LocationServiceImpl implements LocationService {
     }
 
     @Override
-    @Transactional(rollbackOn = Exception.class)
+    @Transactional
     public LocationDTO updateLocationWithById(UpdateLocationRequest updateLocationRequest) {
         Location location = locationRepository.getLocationById(updateLocationRequest.getId())
                 .orElseThrow(() -> new BusinessValidationException(AviationSystemValidationRules.LOCATION_NOT_FOUND));
@@ -104,7 +101,7 @@ public class LocationServiceImpl implements LocationService {
     }
 
     @Override
-    @Transactional(rollbackOn = Exception.class)
+    @Transactional
     public void deleteLocationWithById(Long id) {
         Location location = locationRepository.getLocationById(id)
                 .orElseThrow(() -> new BusinessValidationException(AviationSystemValidationRules.LOCATION_NOT_FOUND));
