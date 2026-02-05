@@ -42,11 +42,17 @@ export default function TransportationForm({ initialData, onSubmit, onCancel }) 
 
     const handleChange = (e) => {
         const { name, value } = e.target;
+
+        if (name === 'operatingDays') {
+            if (value && !/^[1-7,]*$/.test(value)) {
+                return;
+            }
+        }
+
         setFormData((prev) => ({
             ...prev,
             [name]: value,
         }));
-        // Clear error when user starts typing
         if (errors[name]) {
             setErrors((prev) => ({
                 ...prev,
@@ -72,6 +78,16 @@ export default function TransportationForm({ initialData, onSubmit, onCancel }) 
 
         if (!formData.transportationType) {
             newErrors.transportationType = 'Transportation type is required';
+        }
+
+        if (formData.operatingDays) {
+            // Allow numbers 1-7, comma separated. No spaces allowed based on strict request, but commonly spaces are stripped.
+            // Request: "1,2,3,4 formatinda"
+            // Regex: Start, 1-7, optionally followed by (, and 1-7) repeated, End.
+            const dayRegex = /^([1-7](,[1-7])*)?$/;
+            if (!dayRegex.test(formData.operatingDays)) {
+                newErrors.operatingDays = 'Operating days must be digits 1-7 separated by commas (e.g., 1,3,5)';
+            }
         }
 
         setErrors(newErrors);

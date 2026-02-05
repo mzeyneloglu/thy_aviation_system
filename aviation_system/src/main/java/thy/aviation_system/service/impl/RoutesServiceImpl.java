@@ -69,7 +69,7 @@ public class RoutesServiceImpl implements RoutesService {
                     false
             );
 
-            // CASE 1: Direct flight (origin -> destination)
+            // Direct Flight
             if (flight.getOriginLocation().getId().equals(origin.getId()) &&
                     flight.getDestinationLocation().getId().equals(destination.getId())) {
 
@@ -79,7 +79,7 @@ public class RoutesServiceImpl implements RoutesService {
                 }
             }
 
-            // CASE 2: Before transfer + Flight (e.g., UBER -> FLIGHT)
+            // Before Transfer + Flight
             if (!beforeFlightTransfers.isEmpty() &&
                     flight.getDestinationLocation().getId().equals(destination.getId())) {
 
@@ -91,7 +91,7 @@ public class RoutesServiceImpl implements RoutesService {
                 }
             }
 
-            // CASE 3: Flight + After transfer (e.g., FLIGHT -> BUS)
+            // Flight + After Transfer
             if (flight.getOriginLocation().getId().equals(origin.getId()) &&
                     !afterFlightTransfers.isEmpty()) {
 
@@ -103,7 +103,7 @@ public class RoutesServiceImpl implements RoutesService {
                 }
             }
 
-            // CASE 4: Before transfer + Flight + After transfer (e.g., UBER -> FLIGHT -> BUS)
+            // Before Transfer + Flight + After Transfer
             if (!beforeFlightTransfers.isEmpty() && !afterFlightTransfers.isEmpty()) {
 
                 for (Transportation beforeTransfer : beforeFlightTransfers) {
@@ -169,9 +169,9 @@ public class RoutesServiceImpl implements RoutesService {
 
             segmentResponses.add(segmentResponse);
 
-            if (i == 0) {
+            if (i == 0)
                 descriptionBuilder.append(segment.getOriginLocation().getLocationCode());
-            }
+
             descriptionBuilder.append(" → (")
                     .append(segment.getTransportationType())
                     .append(") → ")
