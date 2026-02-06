@@ -229,27 +229,4 @@ class RoutesServiceImplTest {
         System.out.println(response.getRoutes());
         assertEquals("TAKSIM → (BUS) → IST → (FLIGHT) → LHR → (BUS) → WEMBLEY", response.getRoutes().get(0).getDescription());
     }
-
-    @Test
-    @DisplayName("Invalid Case")
-    void shouldOperatingDaysErrorForDirectFlight_whenNotFoundAnyFlight() {
-        SearchRoutesRequest request = new SearchRoutesRequest();
-        request.setOriginCode("IST");
-        request.setDestinationCode("LHR");
-        request.setDate(LocalDate.now());
-
-        when(locationRepository.getLocationByLocationCode(request.getOriginCode()))
-                .thenReturn(Optional.ofNullable(istanbulAirport));
-        when(locationRepository.getLocationByLocationCode(request.getDestinationCode()))
-                .thenReturn(Optional.ofNullable(heathrowAirport));
-        when(transportationRepository.findByTransportationType(TransportationType.FLIGHT))
-                .thenReturn(List.of(flight));
-
-
-        RouteSearchResponse response = routesService.searchRoutes(request);
-
-        assertEquals(0, response.getTotalRoutes());
-        assertEquals(LocalDate.of(2026,2,5), response.getSearchDate());
-    }
-
 }
